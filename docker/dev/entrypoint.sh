@@ -5,8 +5,8 @@ function config_variable(){
         echo 'Need the argument which are PJT_NAME and WORK_DIR.'
         exit 1
     fi
-    PJT_NAME=$1
-    WORK_DIR=$2
+    WORK_DIR=$1
+    PJT_NAME=$2
 }
 
 function start_backend(){
@@ -15,12 +15,13 @@ function start_backend(){
 
 function start_frontend(){
     cd ${WORK_DIR}/${PJT_NAME}/src/frontend
-    echo "WDS_PORT=${OUTSIDE_PORT}
-    FAST_REFRESH=false" > .env
+    echo "PORT=${PORT}
+DISABLE_ESLINT_PLUGIN=true" > .env.development.local
     npm start &
 }
 
 function start_nginx(){
+    envsubst '$$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/nginx.conf
     /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf
 }
 

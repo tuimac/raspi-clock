@@ -9,7 +9,7 @@ function runContainer(){
             -h ${NAME} \
             --restart always \
             -v $(pwd)/${NAME}:/${NAME} \
-            -e OUTSIDE_PORT=${PORT} \
+            -e PORT=${PORT} \
             -p ${PORT}:80 \
             ${NAME}
 }
@@ -26,7 +26,6 @@ function deleteAll(){
     docker rmi ${NAME}
     cleanup
 }
-
 
 function userguide(){
     echo -e "usage: ./run.sh [help | create | delete]"

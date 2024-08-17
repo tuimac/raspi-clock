@@ -1,20 +1,21 @@
 FROM alpine:latest
 
-ENV PJT_NAME=raspi-clock
 ENV WORK_DIR=/root
+ENV PJT_NAME=raspi-clock
+ENV BRANCH=develop
 
 WORKDIR $WORK_DIR
 
 EXPOSE 80
 
 ADD requirements.txt /root/requirements.txt
-ADD nginx.conf /etc/nginx/nginx.conf
+ADD nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 ADD gunicorn.conf.py /etc/gunicorn/gunicorn.conf.py
 ADD entrypoint.sh /root/entrypoint.sh
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache bash git icu-dev ncurses icu-libs python3 python3-dev py3-pip nodejs npm curl tree nginx tzdata jq && \
+    apk add --no-cache bash git icu-dev ncurses icu-libs python3 python3-dev py3-pip nodejs npm curl tree nginx tzdata jq envsubst && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     echo "Asia/Tokyo" >  /etc/timezone && \
     apk del tzdata && \
@@ -33,8 +34,9 @@ RUN apk update && \
     touch /var/log/gunicorn/error.log && \
     mkdir /var/log/fileserver && \
     touch /var/log/fileserver/main.log && \
-    git clone https://github.com/tuimac/${PJT_NAME} && \
-    cd $WORK_DIR/$PJT_NAME/src/frontend && \
+    git clone -b ${BRANCH} https://github.com/tuimac/${PJT_NAME} && \
+    cd ${WORK_DIR}/${PJT_NAME}/src/frontend && \
     npm ci
 
-ENTRYPOINT /root/entrypoint.sh ${PJT_NAME} ${WORK_DIR}
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT /root/entrypoint.sh ${WORK_DIR} ${PJT_NAME}
