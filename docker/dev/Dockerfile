@@ -12,7 +12,6 @@ ADD requirements.txt /root/requirements.txt
 ADD nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 ADD gunicorn.conf.py /etc/gunicorn/gunicorn.conf.py
 ADD entrypoint.sh /root/entrypoint.sh
-ADD extensions.json /root/.vscode/extensions/extensions.json
 
 RUN apk update && \
     apk upgrade && \
