@@ -63,7 +63,7 @@ class HomeLayout extends React.Component {
             </Drawer>
             <Typography variant="h6" color="inherit" underline='none'>
               <Link href="/" underline="none" color="white">
-                File Server
+                Raspberry PI Clock
               </Link>
             </Typography>
           </Toolbar>
