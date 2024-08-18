@@ -12,12 +12,13 @@ ADD requirements.txt /root/requirements.txt
 ADD nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 ADD gunicorn.conf.py /etc/gunicorn/gunicorn.conf.py
 ADD entrypoint.sh /root/entrypoint.sh
+ADD extensions.json /root/.vscode/extensions/extensions.json
 
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache bash git icu-dev ncurses icu-libs python3 python3-dev py3-pip nodejs npm curl tree nginx tzdata jq envsubst && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    echo "Asia/Tokyo" >  /etc/timezone && \
+    echo "Asia/Tokyo" > /etc/timezone && \
     apk del tzdata && \
     mkdir -p /etc/vim/backup && \
     mkdir -p /etc/vim/undo && \

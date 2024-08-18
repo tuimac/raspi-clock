@@ -47,7 +47,7 @@ class HomeLayout extends React.Component {
           </ListItem>
         </List>
       </Box>
-    ); 
+    );
   }
 
   render() {
