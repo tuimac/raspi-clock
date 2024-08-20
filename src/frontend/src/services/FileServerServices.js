@@ -6,7 +6,7 @@ class FileServerServices {
 
   static getFileList(path) {
     let url = API_URL + '/filelist/' + path;
-    return axios.get(url).then((res) => 
+    return axios.get(url).then((res) =>
       {
         return res.data.result;
       })
@@ -18,7 +18,7 @@ class FileServerServices {
 
   static getItemSize(path) {
     let url = API_URL + '/filelist/filesize/' + path;
-    return axios.get(url).then((res) => 
+    return axios.get(url).then((res) =>
       {
         return res.data.result;
       })
@@ -30,7 +30,7 @@ class FileServerServices {
 
   static getFilePreview(path) {
     let url = API_URL + '/filepreview/' + path;
-    return axios.get(url).then((res) => 
+    return axios.get(url).then((res) =>
       {
         return res.data.result;
       })
@@ -55,7 +55,7 @@ class FileServerServices {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then((res) => 
+    }).then((res) =>
     {
       return res.data.result;
     })
@@ -70,7 +70,7 @@ class FileServerServices {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => 
+    }).then((res) =>
     {
       return res.data.result;
     })

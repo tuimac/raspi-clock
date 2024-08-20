@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider,  createTheme } from '@mui/material/styles';
+import { useFullScreenHandle } from "react-full-screen";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 
-import HomeLayout from './layouts/HomeLayout';
+import Layout from './layouts/Layout';
 import Main from './components/main/Main';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -25,27 +27,43 @@ const darkTheme = createTheme({
         }`
     },
   },
+  typography: {
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 700,
+
+    h1: { fontSize: 100 },
+    h2: { fontSize: 48 },
+    h3: { fontSize: 42 },
+    h4: { fontSize: 36 },
+    h5: { fontSize: 20 },
+    h6: { fontSize: 18 },
+    subtitle1: { fontSize: 18 },
+    body1: { fontSize: 16 },
+    button: { textTransform: 'none' },
+  }
 });
 
-class App extends React.Component {
+function App() {
 
-  render() {
-    return (
-      <>
-        <ThemeProvider theme={ darkTheme }>
-          <CssBaseline />
-          <HomeLayout />
-          <BrowserRouter>
-            <Box sx={{ px: 2 }}>
-              <Routes>
-                <Route path={ '/' } element={ <Main /> } />
-              </Routes>
-            </Box>
-          </BrowserRouter>
-        </ThemeProvider>
-      </>
-    );
-  }
+  const fullScreenHandle = useFullScreenHandle();
+
+  return (
+    <>
+      <ThemeProvider theme={ darkTheme }>
+        <CssBaseline />
+        <Layout fullScreenHandle={ fullScreenHandle }/>
+        <BrowserRouter>
+          <Box sx={{ px: 2 }}>
+            <Routes>
+              <Route path={ '/' } element={ <Main fullScreenHandle={ fullScreenHandle }/> } />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

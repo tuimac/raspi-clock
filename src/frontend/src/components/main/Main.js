@@ -1,32 +1,44 @@
-import React from 'react';
-
+import { useState, useEffect } from "react";
 import {
-  Box,
-  Button,
+  Card,
   Grid,
-  Menu,
-  MenuItem,
-  Breadcrumbs,
-  Link
+  Typography
 } from '@mui/material';
+import { FullScreen } from "react-full-screen";
 
-class Main extends React.Component {
+function Main({ fullScreenHandle }) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+  const getNow = () => {
+    let now = new Date();
+    return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
   }
 
-  componentDidMount() {
+  const updateNow = () => {
+    setIntervalFunc(() => setInterval(() => {
+      setNow(() => getNow());
+    }, 1000));
   }
 
-  render() {
-    return(
-      <>
-      </>
-    );
-  };
+  const [now, setNow] = useState(() => getNow());
+  const [interval, setIntervalFunc] = useState('');
+
+  useEffect(() => {
+    updateNow();
+  }, []);
+
+  return(
+    <>
+      <FullScreen handle={ fullScreenHandle }>
+        <Grid container direction='column' alignItems='center' justifyContent='center' spacing={5}>
+          <Grid item>
+            <Card>
+              <Typography variant="h1">{ now }</Typography>
+            </Card>
+          </Grid>
+        </Grid>
+      </FullScreen>
+    </>
+  );
 }
 
 export default Main;
