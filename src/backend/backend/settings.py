@@ -40,10 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'utils',
-    'exceptions',
-    'filelist',
-    'filedownload',
-    'filepreview'
+    'natureremo'
 ]
 
 MIDDLEWARE = [
@@ -202,6 +199,4 @@ REST_FRAMEWORK = {
 
 ASGI_APPLICATION = 'backend.asgi.application'
 
-f = open('/etc/fileserver/config.json')
-CONFIG = json.load(f)
-f.close
+DATA_DIR = '/opt/raspi_clock/data.json'

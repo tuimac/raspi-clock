@@ -17,17 +17,17 @@ function Main({ fullScreenHandle }) {
     }
   }
 
-  const updateNow = () => {
-    setIntervalFunc(() => setInterval(() => {
-      setNow(() => getNow());
-    }, 1000));
+  const getNatureRemo = () => {
+    
   }
 
   const [now, setNow] = useState(() => getNow());
   const [interval, setIntervalFunc] = useState('');
 
   useEffect(() => {
-    updateNow();
+    setIntervalFunc(() => setInterval(() => {
+      setNow(() => getNow());
+    }, 1000));
   }, []);
 
   return(
@@ -35,9 +35,19 @@ function Main({ fullScreenHandle }) {
       <FullScreen handle={ fullScreenHandle }>
         <Box sx={{ height: window.innerHeight, width: window.innerWidth }}>
           <Grid container direction='column' alignItems='center' justifyContent='center' spacing={5}>
-            <Grid item xs={12}>
+            <Grid container item direction='row' alignItems='center' justifyContent='center' xs={6} spacing={5}>
+              <Grid item>
                 <Typography variant="h1">{ now.time }</Typography>
                 <Typography variant="h2">{ now.date }</Typography>
+              </Grid>
+            </Grid>
+            <Grid container item direction='row' alignItems='center' justifyContent='center' xs={6} spacing={5}>
+              <Grid item>
+                <Typography variant="h1">{ now.time }</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h2">{ now.date }</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Box>
