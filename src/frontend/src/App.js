@@ -55,11 +55,9 @@ function App() {
         <CssBaseline />
         <Layout fullScreenHandle={ fullScreenHandle }/>
         <BrowserRouter>
-          <Box sx={{ px: 2 }}>
-            <Routes>
-              <Route path={ '/' } element={ <Main fullScreenHandle={ fullScreenHandle }/> } />
-            </Routes>
-          </Box>
+          <Routes>
+            <Route path={ '/' } element={ <Main fullScreenHandle={ fullScreenHandle }/> } />
+          </Routes>
         </BrowserRouter>
       </ThemeProvider>
     </>
