@@ -145,7 +145,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': "/var/log/fileserver/main.log",
+            'filename': "/var/log/raspi_clock/main.log",
             'maxBytes': 1024 * 1024 * 10,
             'formatter': 'file'
         },
