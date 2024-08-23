@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'utils',
-    'natureremo'
+    'natureremo.token'
 ]
 
 MIDDLEWARE = [

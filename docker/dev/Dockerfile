@@ -25,10 +25,11 @@ RUN apk update && \
     curl -L https://raw.githubusercontent.com/tuimac/tools/master/linux/bashrc/.bashrc_node_docker -o /root/.bashrc && \
     curl -L https://raw.githubusercontent.com/tuimac/tools/master/git/setup.sh -o setup.sh && \
     chmod +x setup.sh && \
-    mkdir /var/log/gunicorn && \
+    mkdir -p /var/log/gunicorn && \
     touch /var/log/gunicorn/access.log && \
     touch /var/log/gunicorn/error.log && \
-    mkdir /opt/raspi_clock && \
+    mkdir -p /var/log/raspi_clock && \
+    mkdir -p /opt/raspi_clock && \
 	touch /opt/raspi_clock/data.json && \
     git clone -b ${BRANCH} https://github.com/tuimac/${PJT_NAME} && \
     cd ${WORK_DIR}/${PJT_NAME}/src/frontend && \
