@@ -1,0 +1,18 @@
+services:
+  raspi-clock:
+    build: .
+    image: raspi-clock
+    container_name: raspi-clock
+    hostname: raspi-clock
+    restart: always
+    environment:
+      - PORT=8001
+    volumes:
+      - ./data:/opt/raspi-clock
+    ports:
+      - 8001:80
+    networks:
+      - raspi-clock
+networks:
+  raspi-clock:
+    name: raspi-clock
