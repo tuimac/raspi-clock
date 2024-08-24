@@ -8,11 +8,13 @@ services:
     environment:
       - PORT=8001
     volumes:
-      - ./data:/opt/raspi-clock
+      - raspi-clock:/opt/raspi-clock
     ports:
       - 8001:80
     networks:
       - raspi-clock
+volumes:
+  raspi-clock:
 networks:
   raspi-clock:
     name: raspi-clock
