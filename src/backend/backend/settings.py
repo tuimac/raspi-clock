@@ -131,7 +131,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': "/var/log/raspi_clock/main.log",
+            'filename': "/var/log/raspi-clock/main.log",
             'maxBytes': 1024 * 1024 * 10,
             'formatter': 'file'
         },
@@ -185,5 +185,4 @@ REST_FRAMEWORK = {
 
 ASGI_APPLICATION = 'backend.asgi.application'
 
-DATA_DIR = '/opt/raspi-clock/data.json'
-
+DATA_PATH= '/opt/raspi-clock/data.json'

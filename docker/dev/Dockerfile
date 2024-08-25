@@ -28,7 +28,7 @@ RUN apk update && \
     mkdir -p /var/log/gunicorn && \
     touch /var/log/gunicorn/access.log && \
     touch /var/log/gunicorn/error.log && \
-    mkdir -p /var/log/raspi_clock && \
+    mkdir -p /var/log/raspi-clock && \
     git clone -b ${BRANCH} https://github.com/tuimac/${PJT_NAME} && \
     cd ${WORK_DIR}/${PJT_NAME}/src/frontend && \
     npm ci
