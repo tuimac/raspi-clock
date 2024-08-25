@@ -20,7 +20,7 @@ function recreate() {
 
 function recreateall() {
     deleteall
-    creat
+    create
 }
 
 function userguide(){
