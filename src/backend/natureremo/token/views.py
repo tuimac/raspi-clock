@@ -37,7 +37,7 @@ class GetTokenViews(views.APIView):
             data = DB.getData()
             if request.data == '':
                 raise Exception('Nature Remo token is empty.')
-            data['natureremo']['token'] = request.data
+            data['natureremo']['token'] = request.data['data']
             DB.saveData(data)
             logger.info('Successed to register Nature Remo token.')
             return Response(

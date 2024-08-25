@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { API_URL } from '../config/environment';
+import { API_URL, NATURE_REMO_URL } from '../config/environment';
 
 class NatureRemoServices {
 
-  static getFileList(path) {
-    let url = API_URL + '/filelist/' + path;
-    return axios.get(url).then((res) =>
+  static getNatureRemoToken() {
+    let url = API_URL + '/natureremo/token';
+    return axios.get(url).then((result) =>
       {
-        return res.data.result;
+        return result.data.result;
       })
       .catch((error) => {
         throw error;
@@ -15,17 +15,42 @@ class NatureRemoServices {
     );
   }
 
-  static getItemSize(path) {
-    let url = API_URL + '/filelist/filesize/' + path;
-    return axios.get(url).then((res) =>
-      {
-        return res.data.result;
-      })
-      .catch((error) => {
-        throw error;
+  static regitsterNatureRemoToken() {
+    let url = API_URL + '/natureremo/token/';
+    return axios.post(url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-    );
+    }).then((res) => 
+    {
+      return res.data.result;
+    })
+    .catch((error) => {
+      throw error;
+    });
   }
+
+
+  static getNatureRemoDeviceInfo(token) {
+    return axios.get(NATURE_REMO_URL, {
+      maxRedirects: 5,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'accept': 'application/json'
+      }
+    }).then((result) =>
+    {
+      for(let i = 0; i < result.data.length; i++) {
+        if(result.data[i]['name'] === 'Kento room') {
+          return result.data[i]['newest_events'];
+        }
+      }
+    })
+    .catch((error) => {
+      throw error;
+    });
+  }
+
 }
 
 export default NatureRemoServices;

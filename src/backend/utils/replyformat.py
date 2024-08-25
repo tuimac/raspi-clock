@@ -1,10 +1,10 @@
 class ReplyFormat:
     @staticmethod
-    def status_200(result: dict) -> dict:
+    def status_200(result) -> dict:
         return {
             'status_code': 200,
             'message': 'success',
-            'result': result
+            'result': str(result)
         }
 
     @staticmethod
