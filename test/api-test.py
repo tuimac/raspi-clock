@@ -3,7 +3,13 @@
 import urllib3
 import json
 
-TOKEN = 'FjmXv48rMX3XRxrFUJogVHp6Inrq90Bte1Oqn3vJO-k.eptdkLjph9LVlQAA_L22uVDEoSBy41gYya6JSgf_nxI'
+TOKEN = ''
+
+def yahoo_api():
+    http = urllib3.PoolManager()
+    url = f'https://map.yahooapis.jp/weather/V1/place?coordinates=135.523781,34.675597&appid=dj00aiZpPWl3V2dUcGdVbmFyaCZzPWNvbnN1bWVyc2VjcmV0Jng9NTQ-&output=json'
+    result = http.request('GET', url,)
+    print(result.data.decode())
 
 def public_api():
     http = urllib3.PoolManager()
@@ -15,4 +21,5 @@ def public_api():
     print(json.dumps(json.loads(result.data.decode()), indent=4, separators=(',', ': ')))
 
 if __name__ == '__main__':
-    public_api()
+    #public_api()
+    yahoo_api()

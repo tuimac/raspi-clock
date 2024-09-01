@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { API_URL, NATURE_REMO_URL } from '../config/environment';
 
-class NatureRemoServices {
-
-  static getNatureRemoToken() {
-    let url = API_URL + '/natureremo/token';
+const NatureRemoServices = {
+  getNatureRemoToken: function() {
+    let url = `${API_URL}/tokens/natureremo/`;
     return axios.get(url).then((result) =>
       {
         return result.data.result;
@@ -13,25 +12,22 @@ class NatureRemoServices {
         throw error;
       }
     );
-  }
-
-  static regitsterNatureRemoToken() {
-    let url = API_URL + '/natureremo/token/';
+  },
+  regitsterNatureRemoToken: function() {
+    let url = `${API_URL}/tokens/natureremo/`;
     return axios.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then((res) => 
+    }).then((res) =>
     {
       return res.data.result;
     })
     .catch((error) => {
       throw error;
     });
-  }
-
-
-  static getNatureRemoDeviceInfo(token) {
+  },
+  getNatureRemoDeviceInfo: function(token) {
     return axios.get(NATURE_REMO_URL, {
       maxRedirects: 5,
       headers: {
@@ -50,7 +46,6 @@ class NatureRemoServices {
       throw error;
     });
   }
-
 }
 
 export default NatureRemoServices;

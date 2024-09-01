@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   AppBar, Box, Button, Toolbar, Typography, IconButton, Drawer,
   List, ListItem, ListItemButton, ListItemText, Link
@@ -20,14 +20,9 @@ function Layout({ fullScreenHandle }) {
     return(
       <Box width='100' role='presentation'>
         <List>
-          <ListItem key='File List'>
-            <ListItemButton component={ Link } to='/'>
-              <ListItemText primary='File List' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key='File Upload'>
-            <ListItemButton component={ Link } to='/'>
-              <ListItemText primary='File Upload' />
+          <ListItem key='Configuration'>
+            <ListItemButton component={ Link } to='/config'>
+              <ListItemText primary='Configuration' />
             </ListItemButton>
           </ListItem>
         </List>

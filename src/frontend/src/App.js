@@ -2,13 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider,  createTheme } from '@mui/material/styles';
-import { useFullScreenHandle } from "react-full-screen";
+import { useFullScreenHandle } from 'react-full-screen';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-
 import Layout from './layouts/Layout';
 import Main from './components/main/Main';
-
+import Config from './components/config/Config';
 
 const darkTheme = createTheme({
   palette: {
@@ -34,7 +32,7 @@ const darkTheme = createTheme({
     fontWeightMedium: 700,
 
     h1: { fontSize: 150 },
-    h2: { fontSize: 48 },
+    h2: { fontSize: 75 },
     h3: { fontSize: 42 },
     h4: { fontSize: 36 },
     h5: { fontSize: 20 },
@@ -57,6 +55,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path={ '/' } element={ <Main fullScreenHandle={ fullScreenHandle }/> } />
+            <Route path={ '/config' } element={ <Config /> } />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

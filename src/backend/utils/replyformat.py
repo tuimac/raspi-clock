@@ -8,6 +8,13 @@ class ReplyFormat:
         }
 
     @staticmethod
+    def status_400(message: str) -> dict:
+        return {
+            'status_code': 400,
+            'message': message
+        }
+
+    @staticmethod
     def status_404(message: str) -> dict:
         return {
             'status_code': 404,

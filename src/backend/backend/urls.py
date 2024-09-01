@@ -1,5 +1,6 @@
 from django.urls import path, include
 
 urlpatterns = [
-    path("api/natureremo/token", include("natureremo.token.urls")),
+    path('api/tokens/', include('tokens.urls')),
+    path('api/climate/', include('climate.urls')),
 ]

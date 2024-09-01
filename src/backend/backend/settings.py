@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'utils',
-    'natureremo.token'
+    'tokens',
+    'climate'
 ]
 
 MIDDLEWARE = [
