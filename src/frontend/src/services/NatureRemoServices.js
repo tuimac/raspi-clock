@@ -1,32 +1,7 @@
 import axios from 'axios';
-import { API_URL, NATURE_REMO_URL } from '../config/environment';
+import { NATURE_REMO_URL } from '../config/environment';
 
 const NatureRemoServices = {
-  getNatureRemoToken: function() {
-    let url = `${API_URL}/tokens/natureremo/`;
-    return axios.get(url).then((result) =>
-      {
-        return result.data.result;
-      })
-      .catch((error) => {
-        throw error;
-      }
-    );
-  },
-  regitsterNatureRemoToken: function() {
-    let url = `${API_URL}/tokens/natureremo/`;
-    return axios.post(url, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then((res) =>
-    {
-      return res.data.result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  },
   getNatureRemoDeviceInfo: function(token) {
     return axios.get(NATURE_REMO_URL, {
       maxRedirects: 5,

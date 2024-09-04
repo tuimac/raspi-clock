@@ -6,7 +6,11 @@ import { FullScreen } from 'react-full-screen';
 import { DAY_LIST, RESOLUTION } from '../../config/environment';
 import NatureRemoServices from '../../services/NatureRemoServices';
 import ClimateService from '../../services/ClimateService';
+import ConfigService from '../../services/ConfigService';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import WbCloudyIcon from '@mui/icons-material/WbCloudy';
+import { WiRainMix } from "react-icons/wi";
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 
 function Main({ fullScreenHandle }) {
@@ -25,10 +29,15 @@ function Main({ fullScreenHandle }) {
     }
   }
 
+  const getConfig = async () => {
+    await ConfigService.getConfig().then((config) => {
+      setConfig(config);
+    });
+  }
+
   const getNatureRemoDeviceInfo = async () => {
-    // const token = await NatureRemoServices.getNatureRemoToken();
-    // if (token !== '') {
-    //   return await NatureRemoServices.getNatureRemoDeviceInfo(token).then((deviceInfo) => {
+    // if (Object.keys(config.token).indexOf('natureremo') !== -1) {
+    //   return await NatureRemoServices.getNatureRemoDeviceInfo(config.token.natureremo).then((deviceInfo) => {
     //     setDeviceInfo(deviceInfo);
     //   });
     // } else {
@@ -37,16 +46,12 @@ function Main({ fullScreenHandle }) {
   }
 
   const getClimateInfo = async () => {
-    // const token = await ClimateService.getClimateToken();
-    // if (token !== '') {
-    //   await ClimateService.getClimateInfo(token).then((climateInfo) => {
-    //     setClimateInfo(climateInfo)
-    //   });
-    // } else {
-    //   setClimateInfo('');
-    // }
+    await ClimateService.getClimate().then((climateInfo) => {
+      setClimateInfo(climateInfo['Feature'][0]['Property']['WeatherList']['Weather'])
+    });
   }
 
+  const [config, setConfig] = useState({});
   const [now, setNow] = useState(() => getNow());
   const [deviceInfo, setDeviceInfo] = useState('');
   const [climateInfo, setClimateInfo] = useState('');
@@ -55,6 +60,7 @@ function Main({ fullScreenHandle }) {
   const divider_width = 8
 
   useEffect(() => {
+    getConfig();
     getNatureRemoDeviceInfo();
     getClimateInfo();
     setInterval(() => {
@@ -62,10 +68,8 @@ function Main({ fullScreenHandle }) {
     }, 1000);
     setInterval(() => {
       getNatureRemoDeviceInfo();
-    }, 60000);
-    setInterval(() => {
       getClimateInfo();
-    }, 60000);
+    }, 120000);
   }, []);
 
   return(
@@ -80,6 +84,7 @@ function Main({ fullScreenHandle }) {
                     <Typography variant='h1'>{ `${now.hour}:${now.minute} ` }</Typography>
                     <Typography variant='h2'>{ now.second }</Typography>
                   </Stack>
+                  <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
                 </Grid>
                 <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
                 <Grid item>
@@ -102,20 +107,34 @@ function Main({ fullScreenHandle }) {
                       </Stack>
                     : <Stack alignItems='center' direction='row' gap={env_gap}>
                         <WaterDropIcon style={{ fontSize: env_icon_size }}/>
-                        <Typography variant='h4'> { deviceInfo.hu.val }%</Typography>
+                        <Typography variant='h4'>{ deviceInfo.hu.val }%</Typography>
                       </Stack>
                   }
                 </Grid>
               </Grid>
               <Divider flexItem sx={{ borderBottomWidth: divider_width }}/>
-              <Grid container item direction='row' alignItems='flex-start' justifyContent='space-around' xs={6} spacing={2}>
-                <Grid item>
-                  <Typography variant='h2'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
-                </Grid>
-                <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
-                <Grid item>
-                  <Typography variant='h2'>{ climateInfo.toString() }</Typography>
-                </Grid>
+              <Grid item>
+                <Stack alignItems='center' justifyContent='center' direction='row' gap={2}>
+                  {
+                    Object.keys(climateInfo).map(index => {
+                      let timestamp = `${climateInfo[index]['Date'].substring(8,10)}:${climateInfo[index]['Date'].substring(10,12)}`;
+                      return (
+                        <Stack alignItems='center' justifyContent='center' direction='column'>
+                          <Typography variant='h4' key={ index + 'time' }>{ timestamp }</Typography>
+                          {
+                            climateInfo[index]['Rainfall'] < 20
+                              ? <WbSunnyIcon style={{ fontSize: env_icon_size }}/>
+                              : climateInfo[index]['Rainfall'] < 50
+                                  ? <WbCloudyIcon style={{ fontSize: env_icon_size }}/>
+                                  : <WiRainMix style={{ fontSize: env_icon_size }}/>
+                            
+                          }
+                          <Typography variant='h4' key={ index }>{ climateInfo[index]['Rainfall'] }%</Typography>
+                        </Stack>
+                      )
+                    })
+                  }
+                </Stack>
               </Grid>
             </Grid>
           </Box>

@@ -10,8 +10,13 @@ class DB:
                 return json.loads(base64.b64decode(f.read()).decode())
         except FileNotFoundError:
             return {
-                'natureremo': {
-                    'token': ''
+                'token': {
+                    'yahoo': '',
+                    'natureremo': ''
+                },
+                'climate': {
+                    'latitude': '',
+                    'longitude': ''
                 }
             }
         except:

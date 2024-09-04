@@ -17,7 +17,7 @@ class ClimateAPIViews(views.APIView):
         try:
             data = DB.getData()
             http = urllib3.PoolManager()
-            url = f'https://map.yahooapis.jp/weather/V1/place?coordinates={data['climate']['coordinate']['longitude']},{data['climate']['coordinate']['latitude']}&appid={data['token']['yahoo']}&output=json'
+            url = f'https://map.yahooapis.jp/weather/V1/place?coordinates={data['climate']['longitude']},{data['climate']['latitude']}&appid={data['token']['yahoo']}&output=json'
             result = http.request('GET', url)
             return Response(
                 ReplyFormat.status_200(result.data.decode()),
@@ -62,7 +62,7 @@ class ClimateConfigViews(views.APIView):
     def post(self, request, *args, **kwargs):
         try:
             data = DB.getData()
-            request.data
+            logger.info(request.data)
             if request.data == '':
                 return Response(
                     ReplyFormat.status_400('Data is empty.'),

@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'utils',
-    'tokens',
+    'config',
     'climate'
 ]
 
