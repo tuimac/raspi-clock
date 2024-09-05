@@ -7,7 +7,7 @@ TOKEN = ''
 
 def yahoo_api():
     http = urllib3.PoolManager()
-    url = f'https://map.yahooapis.jp/weather/V1/place?coordinates=135.523781,34.675597&appid=dj00aiZpPWl3V2dUcGdVbmFyaCZzPWNvbnN1bWVyc2VjcmV0Jng9NTQ-&output=json'
+    url = f'https://map.yahooapis.jp/weather/V1/place?coordinates=135.523781,34.675597&appid=&output=json'
     result = http.request('GET', url,)
     print(result.data.decode())
 
