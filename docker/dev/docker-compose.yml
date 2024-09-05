@@ -1,0 +1,22 @@
+services:
+  raspi-clock:
+    build: .
+    image: raspi-clock
+    container_name: raspi-clock
+    hostname: raspi-clock
+    restart: always
+    environment:
+      - PORT=8001
+    volumes:
+      - raspi-clock:/opt/raspi-clock
+      - /sys/class/backlight/intel_backlight/brightness:/config/brightness
+      - /sys/class/backlight/intel_backlight/max_brightness:/config/max_brightness
+    ports:
+      - 8001:80
+    networks:
+      - raspi-clock
+volumes:
+  raspi-clock:
+networks:
+  raspi-clock:
+    name: raspi-clock

@@ -1,30 +1,26 @@
 #!/bin/bash
 
-NAME='raspi-clock'
-PORT=8001
-
-function runContainer(){
-    docker build -t ${NAME} . --no-cache
-    docker run -itd --name ${NAME} \
-            -h ${NAME} \
-            --restart always \
-            -v $(pwd)/${NAME}:/${NAME} \
-            -e PORT=${PORT} \
-            -p ${PORT}:80 \
-            ${NAME}
+function create(){
+    docker-compose build --no-cache
+    docker-compose up -d
 }
 
-function cleanup(){
-    docker image prune -f
-    docker logs ${NAME}
-    docker container prune -f
+function delete(){
+    docker-compose down
 }
 
-function deleteAll(){
-    docker stop ${NAME}
-    docker rm ${NAME}
-    docker rmi ${NAME}
-    cleanup
+function deleteall(){
+    docker-compose down --rmi all --volumes --remove-orphans
+}
+
+function recreate() {
+    delete
+    create
+}
+
+function recreateall() {
+    deleteall
+    create
 }
 
 function userguide(){
@@ -39,9 +35,15 @@ delete              Delete image and container.
 function main(){
     [[ -z $1 ]] && { userguide; exit 1; }
     if [ $1 == "create" ]; then
-        runContainer
+        create
     elif [ $1 == "delete" ]; then
-        deleteAll
+        delete
+    elif [ $1 == "deleteall" ]; then
+        deleteall
+    elif [ $1 == "recreate" ]; then
+        recreate
+    elif [ $1 == "recreateall" ]; then
+        recreateall
     elif [ $1 == "help" ]; then
         userguide
     else

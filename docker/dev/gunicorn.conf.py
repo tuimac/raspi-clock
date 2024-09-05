@@ -1,4 +1,4 @@
-chdir = '/root/fileserver/src/backend'
+chdir = '/root/raspi-clock/src/backend'
 wsgi_app = 'backend.wsgi:application'
 reload = True
 bind = 'unix:/run/gunicorn.sock'
@@ -11,5 +11,5 @@ access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
 errorlog = '/var/log/gunicorn/error.log'
 loglevel = 'info'
 capture_output = True
-proc_name = 'fileserver'
+proc_name = 'raspi_clock'
 pidfile = '/var/run/gunicorn.pid'
