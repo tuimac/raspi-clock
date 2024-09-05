@@ -36,13 +36,13 @@ function Main({ fullScreenHandle }) {
   }
 
   const getNatureRemoDeviceInfo = async () => {
-    // if (Object.keys(config.token).indexOf('natureremo') !== -1) {
-    //   return await NatureRemoServices.getNatureRemoDeviceInfo(config.token.natureremo).then((deviceInfo) => {
-    //     setDeviceInfo(deviceInfo);
-    //   });
-    // } else {
-    //   setDeviceInfo('');
-    // }
+    if (Object.keys(config.token).indexOf('natureremo') !== -1) {
+      return await NatureRemoServices.getNatureRemoDeviceInfo(config.token.natureremo).then((deviceInfo) => {
+        setDeviceInfo(deviceInfo);
+      });
+    } else {
+      setDeviceInfo('');
+    }
   }
 
   const getClimateInfo = async () => {
@@ -67,9 +67,11 @@ function Main({ fullScreenHandle }) {
       setNow(() => getNow());
     }, 1000);
     setInterval(() => {
-      getNatureRemoDeviceInfo();
       getClimateInfo();
-    }, 120000);
+    }, 600000);
+    setInterval(() => {
+      getNatureRemoDeviceInfo();
+    }, 60000);
   }, []);
 
   return(
@@ -77,14 +79,14 @@ function Main({ fullScreenHandle }) {
       <FullScreen handle={ fullScreenHandle }>
         <Grid container direction='column' alignItems='center' justifyContent='center'>
           <Box sx={{ display: 'flex', height: RESOLUTION.height, width: RESOLUTION.width }}>
-            <Grid container item direction='column' alignItems='center' justifyContent='center' spacing={2}>
+            <Grid container item direction='column' alignItems='center' justifyContent='flex-start' spacing={2}>
               <Grid container item direction='row' alignItems='center' justifyContent='space-around' spacing={2}>
                 <Grid item>
+                  <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
                   <Stack alignItems='center' justifyContent='center' direction='row' gap={4}>
                     <Typography variant='h1'>{ `${now.hour}:${now.minute} ` }</Typography>
                     <Typography variant='h2'>{ now.second }</Typography>
                   </Stack>
-                  <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
                 </Grid>
                 <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
                 <Grid item>
@@ -119,17 +121,16 @@ function Main({ fullScreenHandle }) {
                     Object.keys(climateInfo).map(index => {
                       let timestamp = `${climateInfo[index]['Date'].substring(8,10)}:${climateInfo[index]['Date'].substring(10,12)}`;
                       return (
-                        <Stack alignItems='center' justifyContent='center' direction='column'>
-                          <Typography variant='h4' key={ index + 'time' }>{ timestamp }</Typography>
+                        <Stack alignItems='center' justifyContent='center' direction='column' key={ `${index}_stack` }>
+                          <Typography variant='h5' key={ `${index}_time` }>{ timestamp }</Typography>
                           {
                             climateInfo[index]['Rainfall'] < 20
-                              ? <WbSunnyIcon style={{ fontSize: env_icon_size }}/>
+                              ? <WbSunnyIcon style={{ fontSize: env_icon_size }} key={ `${index}_sunny` }/>
                               : climateInfo[index]['Rainfall'] < 50
-                                  ? <WbCloudyIcon style={{ fontSize: env_icon_size }}/>
-                                  : <WiRainMix style={{ fontSize: env_icon_size }}/>
-                            
+                                  ? <WbCloudyIcon style={{ fontSize: env_icon_size }} key={ `${index}_cloudy` }/>
+                                  : <WiRainMix style={{ fontSize: env_icon_size }} key={ `${index}_rain` }/>
                           }
-                          <Typography variant='h4' key={ index }>{ climateInfo[index]['Rainfall'] }%</Typography>
+                          <Typography variant='h5' key={ `${index}_rainfall` }>{ climateInfo[index]['Rainfall'] }%</Typography>
                         </Stack>
                       )
                     })
