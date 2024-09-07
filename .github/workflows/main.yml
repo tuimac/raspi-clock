@@ -41,9 +41,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build and push
         uses: docker/build-push-action@v6
-        working-directory: docker/prod
         with:
           platforms: linux/amd64,linux/arm64
-          file: ./Dockerfile
+          file: docker/prod/Dockerfile
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/raspi-clock:latest
