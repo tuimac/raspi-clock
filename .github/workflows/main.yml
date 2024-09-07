@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
 
 jobs:
   deploy:
@@ -30,7 +31,7 @@ jobs:
       - name: Build Backend
         working-directory: src
         run: |
-          cp -rp backend ../../docker/prod/
+          cp -rp backend ../docker/prod/backend
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
