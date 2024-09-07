@@ -30,7 +30,7 @@ jobs:
       - name: Build Backend
         working-directory: src
         run: |
-          cp -rp backend ../../docker/prod/backend
+          cp -rp backend ../../docker/prod/
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
