@@ -7,7 +7,7 @@ on:
       - test
 
 jobs:
-  deploy:
+  create-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,6 +43,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: ./docker/prod/
           platforms: linux/amd64,linux/arm64
           file: docker/prod/Dockerfile
           push: true
