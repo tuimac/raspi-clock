@@ -20,9 +20,11 @@ RUN apk update && \
     mkdir /var/log/gunicorn && \
     touch /var/log/gunicorn/access.log && \
     touch /var/log/gunicorn/error.log && \
+    mkdir /var/log/raspi-clock && \
+    touch /var/log/raspi-clock/main.log && \
     mkdir /opt/raspi_clock && \
 	touch /opt/raspi_clock/data.json && \
-    echo '\n\
+    echo -en '\n\
 echo -en "\e[1m\e[34m" \n\
 cat << "EOF" \n\
 \n\
