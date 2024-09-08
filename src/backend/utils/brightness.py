@@ -7,9 +7,9 @@ class Brightness:
         try:
             brightness_info = {}
             with open(BRIGHTNESS_PATH, 'r') as f:
-                brightness_info['brightness'] = f.read()
+                brightness_info['brightness'] = f.read().replace('\n', '')
             with open(BRIGHTNESS_MAX_PATH, 'r') as f:
-                brightness_info['max_brightness'] = f.read()
+                brightness_info['max_brightness'] = f.read().replace('\n', '')
             return brightness_info
         except:
             raise
@@ -18,6 +18,6 @@ class Brightness:
     def updateBrightness(brightness_value):
         try:
             with open(BRIGHTNESS_PATH, 'w') as f:
-                return f.write(brightness_value)
+                return f.write(str(brightness_value))
         except:
             raise

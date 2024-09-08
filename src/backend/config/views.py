@@ -62,7 +62,7 @@ class BrightnessConfigViews(views.APIView):
     def get(self, request, *args, **kwargs):
         try:
             return Response(
-                ReplyFormat.status_200(Brightness.getBrightness()),
+                ReplyFormat.status_200(json.dumps(Brightness.getBrightness())),
                 status=status.HTTP_200_OK
             )
         except:
@@ -81,7 +81,8 @@ class BrightnessConfigViews(views.APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             else:
-                Brightness.saveData(request.data)
+                logger.info(request.data)
+                Brightness.updateBrightness(request.data)
                 logger.info(f'Successed to register brightness.')
                 return Response(
                     ReplyFormat.status_200(f'Successed to register brightness.'),

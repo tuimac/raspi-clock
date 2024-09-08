@@ -26,7 +26,32 @@ const ConfigService = {
     .catch((error) => {
       throw error;
     });
-  }
+  },
+  getBrightness: function() {
+    let url = `${API_URL}/config/brightness/`;
+    return axios.get(url).then((result) =>
+      {
+        return JSON.parse(result.data.result);
+      })
+      .catch((error) => {
+        throw error;
+      }
+    );
+  },
+  updateBrightness: function(config) {
+    let url = `${API_URL}/config/brightness/`;
+    return axios.post(url, JSON.stringify(config), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) =>
+    {
+      return res.data.result;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  },
 }
 
 export default ConfigService;
