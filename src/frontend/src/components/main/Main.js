@@ -30,19 +30,16 @@ function Main({ fullScreenHandle }) {
   }
 
   const getConfig = async () => {
-    await ConfigService.getConfig().then((config) => {
+    return await ConfigService.getConfig().then((config) => {
       setConfig(config);
+      return config;
     });
   }
 
-  const getNatureRemoDeviceInfo = async () => {
-    if (Object.keys(config.token).indexOf('natureremo') !== -1) {
-      return await NatureRemoServices.getNatureRemoDeviceInfo(config.token.natureremo).then((deviceInfo) => {
-        setDeviceInfo(deviceInfo);
-      });
-    } else {
-      setDeviceInfo('');
-    }
+  const getNatureRemoDeviceInfo = async (token) => {
+    await NatureRemoServices.getNatureRemoDeviceInfo(token).then((deviceInfo) => {
+      setDeviceInfo(deviceInfo);
+    });
   }
 
   const getClimateInfo = async () => {
@@ -60,9 +57,10 @@ function Main({ fullScreenHandle }) {
   const divider_width = 8
 
   useEffect(() => {
-    getConfig();
-    getNatureRemoDeviceInfo();
-    getClimateInfo();
+    getConfig().then((local_config) => {
+      getNatureRemoDeviceInfo(local_config.token.natureremo);
+      getClimateInfo();
+    });
     setInterval(() => {
       setNow(() => getNow());
     }, 1000);
@@ -70,7 +68,7 @@ function Main({ fullScreenHandle }) {
       getClimateInfo();
     }, 600000);
     setInterval(() => {
-      getNatureRemoDeviceInfo();
+      getNatureRemoDeviceInfo(config.token.natureremo);
     }, 60000);
   }, []);
 
@@ -82,7 +80,10 @@ function Main({ fullScreenHandle }) {
             <Grid container item direction='column' alignItems='center' justifyContent='flex-start' spacing={2}>
               <Grid container item direction='row' alignItems='center' justifyContent='space-around' spacing={2}>
                 <Grid item>
-                  <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
+                  <Stack alignItems='center' justifyContent='flex-start' direction='row' gap={4}>
+                    <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
+                    <Typography variant='h4'>{ `${now.date}` }</Typography>
+                  </Stack>
                   <Stack alignItems='center' justifyContent='center' direction='row' gap={4}>
                     <Typography variant='h1'>{ `${now.hour}:${now.minute} ` }</Typography>
                     <Typography variant='h2'>{ now.second }</Typography>
