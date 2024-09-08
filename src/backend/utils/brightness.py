@@ -17,7 +17,7 @@ class Brightness:
     @staticmethod
     def updateBrightness(brightness_value):
         try:
-            with open(BRIGHTNESS_PATH, 'w') as f:
-                return f.write(str(brightness_value))
+            with open(BRIGHTNESS_PATH, mode='w') as f:
+                f.write(str(brightness_value))
         except:
             raise
