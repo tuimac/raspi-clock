@@ -52,6 +52,21 @@ const ConfigService = {
       throw error;
     });
   },
+  sendCommands: function(commands) {
+    let url = `${API_URL}/commands/`;
+    let data = { commands: commands };
+    return axios.post(url, JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) =>
+    {
+      return res.data.result;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  },
 }
 
 export default ConfigService;

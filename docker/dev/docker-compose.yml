@@ -11,8 +11,14 @@ services:
       - raspi-clock:/opt/raspi-clock
       - /sys/class/backlight/intel_backlight/brightness:/config/brightness
       - /sys/class/backlight/intel_backlight/max_brightness:/config/max_brightness
+      - /usr/sbin/shutdown:/usr/sbin/shutdown
     ports:
       - 8001:80
+    cap_add:
+    - SYS_ADMIN
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
     networks:
       - raspi-clock
 volumes:

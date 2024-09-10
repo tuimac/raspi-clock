@@ -134,6 +134,31 @@ function Config() {
               </Accordion>
             </Grid>
             <Grid item>
+              <Accordion sx={{ width: RESOLUTION.width * 0.7 }}>
+                <AccordionSummary
+                  expandIcon={<ArrowDropDownIcon />}
+                  aria-controls='shutdown'
+                  id='shutdown'
+                >
+                  <Typography variant='h5'>Shutdown</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container direction='column' alignItems='center' justifyContent='center'>
+                    <Grid>
+                      <Button
+                        variant='contained'
+                        onClick={() => {
+                          ConfigService.sendCommands('sudo shutdown -h now');
+                        }}
+                      >
+                        Shutdown
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+            <Grid item>
               <Button
                 variant='contained'
                 onClick={() => {

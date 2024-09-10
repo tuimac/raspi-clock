@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-  Box, Divider, Grid, Typography, Stack
+  Box, Button, Divider, Grid, Typography, Stack
 } from '@mui/material';
 import { FullScreen } from 'react-full-screen';
 import { DAY_LIST, RESOLUTION } from '../../config/environment';
@@ -24,20 +24,19 @@ function Main({ fullScreenHandle }) {
       hour: String(now.getHours()).padStart(2, '0'),
       minute: String(now.getMinutes()).padStart(2, '0'),
       second: String(now.getSeconds()).padStart(2, '0'),
-      time: `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`,
       date: DAY_LIST[now.getDay()]
     }
   }
 
   const getConfig = async () => {
-    return await ConfigService.getConfig().then((config) => {
-      setConfig(config);
-      return config;
+    return await ConfigService.getConfig().then((config_data) => {
+      setConfig(config_data);
+      return config_data;
     });
   }
 
-  const getNatureRemoDeviceInfo = async (token) => {
-    await NatureRemoServices.getNatureRemoDeviceInfo(token).then((deviceInfo) => {
+  const getNatureRemoDeviceInfo = async () => {
+    await NatureRemoServices.getNatureRemoDeviceInfo(config.token.natureremo).then((deviceInfo) => {
       setDeviceInfo(deviceInfo);
     });
   }
@@ -47,7 +46,7 @@ function Main({ fullScreenHandle }) {
       setClimateInfo(climateInfo['Feature'][0]['Property']['WeatherList']['Weather'])
     });
   }
-
+  
   const [config, setConfig] = useState({});
   const [now, setNow] = useState(() => getNow());
   const [deviceInfo, setDeviceInfo] = useState('');
@@ -68,7 +67,7 @@ function Main({ fullScreenHandle }) {
       getClimateInfo();
     }, 600000);
     setInterval(() => {
-      getNatureRemoDeviceInfo(config.token.natureremo);
+      getNatureRemoDeviceInfo();
     }, 60000);
   }, []);
 
@@ -91,6 +90,12 @@ function Main({ fullScreenHandle }) {
                 </Grid>
                 <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
                 <Grid item>
+                  <Button
+                    size="medium"
+                    variant="outlined"
+                    color="success"
+                    onClick={ fullScreenHandle.exit }
+                  >Escape</Button>
                   {
                     deviceInfo === ''
                     ? <Stack alignItems='center' direction='row' gap={env_gap}>
