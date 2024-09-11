@@ -14,7 +14,7 @@ ADD entrypoint.sh /root/entrypoint.sh
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache bash git icu-dev ncurses icu-libs python3 python3-dev py3-pip nodejs npm curl tree nginx tzdata jq envsubst sudo shutdown openrc && \
+    apk add --no-cache bash git icu-dev ncurses icu-libs python3 python3-dev py3-pip nodejs npm curl tree nginx tzdata jq envsubst sudo openrc && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     echo "Asia/Tokyo" > /etc/timezone && \
     apk del tzdata && \
