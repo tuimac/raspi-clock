@@ -4,7 +4,7 @@ GITHUB_REPO_NAME='raspi-clock'
 RUNNER_SCRIPT_DIR='/opt/github-runners/'${GITHUB_REPO_NAME}
 SERVICE_NAME='github-runner_'${GITHUB_REPO_NAME}'.service'
 
-[[ $USER -ne 'root' ]] && { echo 'Must be root!!'; exit 1; }
+[[ $USER != 'root' ]] && { echo 'Must be root!!'; exit 1; }
 
 cat << EOF >> /usr/lib/systemd/user/${SERVICE_NAME}
 [Unit]
