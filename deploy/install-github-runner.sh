@@ -6,7 +6,7 @@ SERVICE_NAME='github-runner_'${GITHUB_REPO_NAME}'.service'
 
 [[ $USER != 'root' ]] && { echo 'Must be root!!'; exit 1; }
 
-cat << EOF >> /usr/lib/systemd/user/${SERVICE_NAME}
+cat << EOF >> /etc/systemd/system/${SERVICE_NAME}
 [Unit]
 Description=Github Ruuner for $GITHUB_REPO_NAME
 After=network.target
