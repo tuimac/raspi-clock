@@ -13,8 +13,8 @@ function refreshGit() {
 }
 
 function deploy() {
-    docker compose down --rmi all
-    docker compose up -d
+    BRANCH=$1 docker compose down --rmi all
+    BRANCH=$1 docker compose up -d
     sudo cp ../../src/shutdown/shutdown-server.service /etc/systemd/system/shutdown-server.service
     sudo systemctl daemon-reload
     sudo systemctl stop shutdown-server.service
@@ -25,7 +25,7 @@ function deploy() {
 function main() {
     changeDir
     refreshGit
-    deploy
+    deploy $1
 }
 
-main
+main $1

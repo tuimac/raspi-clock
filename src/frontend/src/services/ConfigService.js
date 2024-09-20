@@ -53,7 +53,7 @@ const ConfigService = {
     });
   },
   sendCommands: function(commands) {
-    let url = `${API_URL}/commands/`;
+    let url = `${API_URL}/api/commands`;
     let data = { commands: commands };
     return axios.post(url, JSON.stringify(data), {
       headers: {
