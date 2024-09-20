@@ -7,7 +7,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/command', methods=['POST'])
+@app.route('/host/command', methods=['POST'])
 def command():
     try:
         process = subprocess.run(json.loads(request.data)['command'].split(' ') ,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
