@@ -14,12 +14,6 @@ services:
       - /usr/bin/systemctl:/usr/bin/systemctl
     ports:
       - 8001:80
-    cap_add:
-    - SYS_ADMIN
-    privileged: true
-    pid: host
-    security_opt:
-      - seccomp:unconfined
     networks:
       - raspi-clock
 volumes:
