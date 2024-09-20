@@ -3,6 +3,7 @@ import {
   Accordion, AccordionSummary, AccordionDetails, Box, Grid, Typography, TextField, Stack, Button,
   Slider
 } from '@mui/material';
+import { isMobile } from 'react-device-detect';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { RESOLUTION } from '../../config/environment';
 import ConfigService from '../../services/ConfigService';
@@ -39,7 +40,7 @@ function Config() {
   return(
     <>
       <Grid container direction='column' alignItems='center' justifyContent='center'>
-        <Box sx={{ display: 'flex', width: RESOLUTION.width }}>
+        <Box sx={ isMobile ? { display: 'flex' } : { display: 'flex', width: RESOLUTION.width }}>
           <Grid container item direction='column' alignItems='center' justifyContent='center' spacing={2}>
             <Grid item>
               <Accordion sx={{ width: RESOLUTION.width * 0.7 }}>

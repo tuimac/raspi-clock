@@ -27,8 +27,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'utils',
     'config',
-    'climate',
-    'commands'
+    'climate'
 ]
 
 MIDDLEWARE = [
