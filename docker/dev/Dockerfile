@@ -20,7 +20,7 @@ RUN apk update && \
     apk del tzdata && \
     mkdir -p /etc/vim/backup && \
     mkdir -p /etc/vim/undo && \
-    apk add --no-cache py3-django py3-django-rest-framework py3-django-filter py3-django-cors-headers py3-setuptools py3-gunicorn py3-requests && \
+    apk add --no-cache py3-django py3-django-rest-framework py3-django-filter py3-django-cors-headers py3-setuptools py3-gunicorn py3-requests py3-flask-cors py3-flask && \
     curl -L https://raw.githubusercontent.com/tuimac/tools/master/vim/vimrc -o /etc/vim/vimrc && \
     curl -L https://raw.githubusercontent.com/tuimac/tools/master/linux/bashrc/.bashrc_node_docker -o /root/.bashrc && \
     curl -L https://raw.githubusercontent.com/tuimac/tools/master/git/setup.sh -o setup.sh && \
