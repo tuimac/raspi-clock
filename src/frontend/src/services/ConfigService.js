@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL } from '../config/environment';
+import { API_URL, HOST_API_URL } from '../config/environment';
 
 const ConfigService = {
   getConfig: function() {
@@ -53,7 +53,7 @@ const ConfigService = {
     });
   },
   sendCommand: function(command) {
-    let url = `${API_URL}/command/`;
+    let url = `${HOST_API_URL}/command/`;
     let data = { command: command };
     return axios.post(url, JSON.stringify(data), {
       headers: {
