@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=python3 /home/tuimac/github/raspi-clock/src/shutdown/shutdown-service.py
+ExecStart=/home/tuimac/github/raspi-clock/src/shutdown/shutdown-server.py
 KillMode=process
 Restart=on-failure
 

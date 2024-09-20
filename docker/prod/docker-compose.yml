@@ -1,6 +1,6 @@
 services:
   raspi-clock:
-    image: tuimac/raspi-clock:main
+    image: tuimac/raspi-clock:${GITHUB_BRANCH}
     container_name: raspi-clock
     hostname: raspi-clock
     restart: always
