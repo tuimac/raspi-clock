@@ -1,0 +1,12 @@
+[Unit]
+Description=Github Ruuner for raspi-clock
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=python3 /home/tuimac/github/raspi-clock/src/shutdown/shutdown-service.py
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
