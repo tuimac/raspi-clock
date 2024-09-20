@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import {
-  Box, Button, Divider, Grid, Typography, Stack,
+  Box, Divider, Grid, Typography, Stack,
   IconButton
 } from '@mui/material';
 import { FullScreen } from 'react-full-screen';
@@ -43,15 +43,15 @@ function Main({ fullScreenHandle }) {
   }
 
   const getNatureRemoDeviceInfo = () => {
-    // NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
-    //   setDeviceInfo(deviceInfo);
-    // });
+    NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
+      setDeviceInfo(deviceInfo);
+    });
   }
 
   const getClimateInfo = () => {
-    // ClimateService.getClimate().then((climateInfo) => {
-    //   setClimateInfo(climateInfo['Feature'][0]['Property']['WeatherList']['Weather'])
-    // });
+    ClimateService.getClimate().then((climateInfo) => {
+      setClimateInfo(climateInfo['Feature'][0]['Property']['WeatherList']['Weather'])
+    });
   }
 
   const [now, setNow] = useState(() => getNow());
