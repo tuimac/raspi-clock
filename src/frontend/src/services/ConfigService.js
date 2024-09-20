@@ -52,9 +52,9 @@ const ConfigService = {
       throw error;
     });
   },
-  sendCommands: function(commands) {
-    let url = `${API_URL}/api/commands`;
-    let data = { commands: commands };
+  sendCommand: function(command) {
+    let url = `${API_URL}/api/command`;
+    let data = { command: command };
     return axios.post(url, JSON.stringify(data), {
       headers: {
         'Content-Type': 'application/json'

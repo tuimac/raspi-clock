@@ -148,7 +148,7 @@ function Config() {
                       <Button
                         variant='contained'
                         onClick={() => {
-                          ConfigService.sendCommands('sudo shutdown -h now');
+                          ConfigService.sendCommand('sudo shutdown -h now');
                         }}
                       >
                         Shutdown

@@ -52,7 +52,23 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
-      - name: Run a multi-line script
-        working-directory: deploy
-        run: bash deploy.sh
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Shutdown and delete container
+        working-directory: docker/prod
+        run: |
+          BRANCH=${{ github.ref_name }} docker compose down --rmi all
+      - name: Deploy new container
+        working-directory: docker/prod
+        run: |
+          BRANCH=${{ github.ref_name }} docker compose up -d
+      - name: Deploy command server
+        working-directory: src/command
+        run: |
+          [[ ! -d '/opt/command-server' ]] && { sudo mkdir /opt/command-server; }
+          sudo cp command-server.py /opt/command-server/command-server.py
+          sudo cp command-server.service /etc/systemd/system/command-server.service
+          sudo systemctl daemon-reload
+          sudo systemctl stop command-server.service
+          sudo systemctl enable command-server.service
+          sudo systemctl start command-server.service

@@ -7,10 +7,10 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/shutdown', methods=['POST'])
+@app.route('/command', methods=['POST'])
 def shutdown():
     try:
-        result = os.system(json.loads(request.data)['commands'])
+        result = os.system(json.loads(request.data)['command'])
         return result
     except:
         return traceback.format_exc()
