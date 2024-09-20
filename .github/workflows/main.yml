@@ -62,6 +62,8 @@ jobs:
         working-directory: docker/prod
         run: |
           GITHUB_BRANCH=${{ github.ref_name }} docker compose up -d
+      - name: Prepare command server
+        run: sudo apt install -y python3-flask python3-flask-cors
       - name: Deploy command server
         working-directory: src/command
         run: |
