@@ -15,9 +15,9 @@ function refreshGit() {
 function deploy() {
     docker compose down --rmi all
     docker compose up -d
-    cp ../../src/shutdown/shutdown-server.service /etc/systemd/system/shutdown-server.service
-    sudo systemctl stop shutdown-server.service
+    sudo cp ../../src/shutdown/shutdown-server.service /etc/systemd/system/shutdown-server.service
     sudo systemctl daemon-reload
+    sudo systemctl stop shutdown-server.service
     sudo systemctl enable shutdown-server.service
     sudo systemctl start shutdown-server.service
 }
