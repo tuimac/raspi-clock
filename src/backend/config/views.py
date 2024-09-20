@@ -20,11 +20,6 @@ class ConfigViews(views.APIView):
                 ReplyFormat.status_200(json.dumps(DB.getData())),
                 status=status.HTTP_200_OK
             )
-        except KeyError:
-            return Response(
-                ReplyFormat.status_200(''),
-                status=status.HTTP_200_OK
-            )
         except:
             message = traceback.format_exc().splitlines()[-1]
             logger.error(traceback.format_exc())
