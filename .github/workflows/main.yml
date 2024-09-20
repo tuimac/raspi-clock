@@ -57,11 +57,11 @@ jobs:
       - name: Shutdown and delete container
         working-directory: docker/prod
         run: |
-          BRANCH=${{ github.ref_name }} docker compose down --rmi all
+          GITHUB_BRANCH=${{ github.ref_name }} docker compose down --rmi all
       - name: Deploy new container
         working-directory: docker/prod
         run: |
-          BRANCH=${{ github.ref_name }} docker compose up -d
+          GITHUB_BRANCH=${{ github.ref_name }} docker compose up -d
       - name: Deploy command server
         working-directory: src/command
         run: |
