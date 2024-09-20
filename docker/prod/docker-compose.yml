@@ -1,6 +1,6 @@
 services:
   raspi-clock:
-    image: tuimac/raspi-clock:latest
+    image: tuimac/raspi-clock:main
     container_name: raspi-clock
     hostname: raspi-clock
     restart: always

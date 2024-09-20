@@ -12,7 +12,7 @@ ADD backend/ /root/backend
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache bash python3 python3-dev py3-pip nginx tzdata && \
+    apk add --no-cache bash icu-dev ncurses icu-libs python3 python3-dev py3-pip nginx tzdata sudo && \
     apk add --no-cache py3-django py3-django-rest-framework py3-django-filter py3-django-cors-headers py3-setuptools py3-gunicorn py3-requests && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     echo "Asia/Tokyo" > /etc/timezone && \
@@ -20,9 +20,11 @@ RUN apk update && \
     mkdir /var/log/gunicorn && \
     touch /var/log/gunicorn/access.log && \
     touch /var/log/gunicorn/error.log && \
+    mkdir /var/log/raspi-clock && \
+    touch /var/log/raspi-clock/main.log && \
     mkdir /opt/raspi_clock && \
 	touch /opt/raspi_clock/data.json && \
-    echo '\n\
+    echo -en '\n\
 echo -en "\e[1m\e[34m" \n\
 cat << "EOF" \n\
 \n\

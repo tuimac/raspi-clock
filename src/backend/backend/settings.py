@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'utils',
     'config',
-    'climate'
+    'climate',
+    'commands'
 ]
 
 MIDDLEWARE = [
@@ -187,3 +188,5 @@ REST_FRAMEWORK = {
 ASGI_APPLICATION = 'backend.asgi.application'
 
 DATA_PATH= '/opt/raspi-clock/data.json'
+BRIGHTNESS_PATH = '/config/brightness'
+BRIGHTNESS_MAX_PATH = '/config/max_brightness'
