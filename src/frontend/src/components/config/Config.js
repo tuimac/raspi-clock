@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import {
-  Accordion, AccordionSummary, AccordionDetails, Box, Grid, Typography, TextField, Stack, Button,
+  Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Stack, Button,
   Slider
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { isMobile } from 'react-device-detect';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { RESOLUTION } from '../../config/environment';
