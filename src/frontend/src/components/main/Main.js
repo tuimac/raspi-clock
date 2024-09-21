@@ -15,6 +15,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import WbCloudyIcon from '@mui/icons-material/WbCloudy';
 import { WiRainMix } from "react-icons/wi";
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 function Main({ fullScreenHandle }) {
@@ -45,9 +46,9 @@ function Main({ fullScreenHandle }) {
   }
 
   const getNatureRemoDeviceInfo = () => {
-    // NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
-    //   setDeviceInfo(deviceInfo);
-    // });
+    NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
+      setDeviceInfo(deviceInfo);
+    });
   }
 
   const getClimateInfo = () => {
@@ -120,9 +121,12 @@ function Main({ fullScreenHandle }) {
                 <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
                 <Grid item>
                   <Stack alignItems='flex-start' justifyContent='center' direction='column' gap={3}>
-                    <Stack justifyContent='end' direction='row'>
+                    <Stack justifyContent='center' direction='row' gap={2}>
                       <IconButton color='white' onClick={ fullScreenHandle.exit }>
                         <ExitToAppIcon style={{ width: 50, height: 50, padding: 0 }}/>
+                      </IconButton>
+                      <IconButton color='white' onClick={ () => window.location.reload() }>
+                        <RefreshIcon style={{ width: 50, height: 50, padding: 0 }}/>
                       </IconButton>
                     </Stack>
                     <Stack alignItems='flex-start' justifyContent='center' direction='column'>
