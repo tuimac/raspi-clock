@@ -45,7 +45,7 @@ const darkTheme = createTheme({
 
 function App() {
 
-  const fullScreenHandle = useFullScreenHandle();
+  var fullScreenHandle = useFullScreenHandle();
 
   return (
     <>

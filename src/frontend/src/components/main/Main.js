@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import {
-  Box, Divider, Grid, Typography, Stack,
+  Box, Divider, Typography, Stack, CircularProgress,
   IconButton
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import { BarChart } from '@mui/x-charts';
 import { FullScreen } from 'react-full-screen';
 import { DAY_LIST, RESOLUTION } from '../../config/environment';
 import NatureRemoServices from '../../services/NatureRemoServices';
@@ -43,14 +45,23 @@ function Main({ fullScreenHandle }) {
   }
 
   const getNatureRemoDeviceInfo = () => {
-    NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
-      setDeviceInfo(deviceInfo);
-    });
+    // NatureRemoServices.getNatureRemoDeviceInfo(configRef.current.token.natureremo).then((deviceInfo) => {
+    //   setDeviceInfo(deviceInfo);
+    // });
   }
 
   const getClimateInfo = () => {
-    ClimateService.getClimate().then((climateInfo) => {
-      setClimateInfo(climateInfo['Feature'][0]['Property']['WeatherList']['Weather'])
+    ClimateService.getClimate().then((results) => {
+      let climateInfo = [];
+      for(let index in results['Feature'][0]['Property']['WeatherList']['Weather']) {
+        let result = results['Feature'][0]['Property']['WeatherList']['Weather'][index];
+        climateInfo.push({
+          date: `${result['Date'].substring(8,10)}:${result['Date'].substring(10,12)}`,
+          rainfall: result['Rainfall']
+        });
+      }
+      console.log(climateInfo);
+      setClimateInfo(climateInfo);
     });
   }
 
@@ -61,6 +72,7 @@ function Main({ fullScreenHandle }) {
   const env_icon_size = 38
   const env_gap = 2
   const divider_width = 8
+  const valueFormatter = (value) => `${value}mm`;
 
   useEffect(() => {
     getConfig();
@@ -92,22 +104,22 @@ function Main({ fullScreenHandle }) {
     <>
       <FullScreen handle={ fullScreenHandle }>
         <Grid container direction='column' alignItems='center' justifyContent='center' spacing={0}>
-          <Box sx={{ display: 'flex', height: RESOLUTION.height, width: RESOLUTION.width, border: 1 }}>
-            <Grid container item direction='column' alignItems='center' justifyContent='flex-start' spacing={0}>
-              <Grid container item direction='row' alignItems='center' justifyContent='space-around' spacing={0}>
+          <Box sx={{ height: RESOLUTION.height, width: RESOLUTION.width, border: 1 }}>
+            <Grid container item direction='column' alignItems='center' justifyContent='center' spacing={0}>
+              <Grid container item direction='row' alignItems='center' justifyContent='center' spacing={4}>
                 <Grid item>
                   <Stack alignItems='center' justifyContent='flex-start' direction='row' gap={4}>
                     <Typography variant='h4'>{ `${now.year}/${now.month}/${now.day}` }</Typography>
                     <Typography variant='h4'>{ `${now.date}` }</Typography>
                   </Stack>
-                  <Stack alignItems='center' justifyContent='center' direction='row' gap={4}>
+                  <Stack alignItems='center' justifyContent='flex-start' direction='row' gap={4}>
                     <Typography variant='h1'>{ `${now.hour}:${now.minute} ` }</Typography>
                     <Typography variant='h2'>{ now.second }</Typography>
                   </Stack>
                 </Grid>
                 <Divider flexItem sx={{ borderRightWidth: divider_width }} orientation='vertical'/>
                 <Grid item>
-                  <Stack alignItems='flex-start' justifyContent='flex-start' direction='column' gap={3}>
+                  <Stack alignItems='flex-start' justifyContent='center' direction='column' gap={3}>
                     <Stack justifyContent='end' direction='row'>
                       <IconButton color='white' onClick={ fullScreenHandle.exit }>
                         <ExitToAppIcon style={{ width: 50, height: 50, padding: 0 }}/>
@@ -141,27 +153,23 @@ function Main({ fullScreenHandle }) {
                 </Grid>
               </Grid>
               <Divider flexItem sx={{ borderBottomWidth: divider_width }}/>
-              <Grid item>
-                <Stack alignItems='center' justifyContent='center' direction='row' gap={2}>
+              <Grid container item direction='row' alignItems='center' justifyContent='space-around' spacing={0}>
+                <Grid item>
                   {
-                    Object.keys(climateInfo).map(index => {
-                      let timestamp = `${climateInfo[index]['Date'].substring(8,10)}:${climateInfo[index]['Date'].substring(10,12)}`;
-                      return (
-                        <Stack alignItems='center' justifyContent='center' direction='column' key={ `${index}_stack` }>
-                          <Typography variant='h5' key={ `${index}_time` }>{ timestamp }</Typography>
-                          {
-                            climateInfo[index]['Rainfall'] < 20
-                              ? <WbSunnyIcon style={{ fontSize: env_icon_size }} key={ `${index}_sunny` }/>
-                              : climateInfo[index]['Rainfall'] < 50
-                                  ? <WbCloudyIcon style={{ fontSize: env_icon_size }} key={ `${index}_cloudy` }/>
-                                  : <WiRainMix style={{ fontSize: env_icon_size }} key={ `${index}_rain` }/>
-                          }
-                          <Typography variant='h5' key={ `${index}_rainfall` }>{ climateInfo[index]['Rainfall'] }%</Typography>
-                        </Stack>
-                      )
-                    })
+                    climateInfo === ''
+                      ? <CircularProgress size={ 40 }/>
+                      : <Box sx={{ width: '100%' }}>
+                          <BarChart
+                            series={[{ dataKey: 'rainfall', color: '#577399', valueFormatter}]}
+                            xAxis={[{ scaleType: 'band', dataKey: 'date', label: 'Time' }]}
+                            yAxis={[{ label: 'Rainfall (mm)', min: 0, max: 100 }]}
+                            dataset={ climateInfo }
+                            height={ 200 }
+                            width={ 500 }
+                          />
+                        </Box>
                   }
-                </Stack>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
